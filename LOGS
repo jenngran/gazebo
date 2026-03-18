@@ -1,0 +1,53 @@
+D:\minka>py scrPresidenciaV1.2.py
+D:\minka\scrPresidenciaV1.2.py:24: SyntaxWarning: invalid escape sequence '\m'
+  CARPETA_DESCARGAS = "D:\minka\DescargaPDF"  # Ajusta esta ruta
+There was an error managing chromedriver (Error parsing JSON from URL https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json expected value at line 1 column 1); using driver found in the cache
+Nuevo registro detectado
+Se encontraron 10 filas en la tabla.
+Descargando PDF del decreto 332...
+No se pudo descargar el PDF del decreto 332: [WinError 3] El sistema no puede encontrar la ruta especificada: 'D:\\minka\\DescargaPDF'
+Descargando PDF del decreto 331...
+Descarga completada para 331: D:\minka\DescargaPDF\Decreto_Ejecutivo_No._331_20260217165422.pdf
+Descargando PDF del decreto 330...
+Descarga completada para 330: D:\minka\DescargaPDF\Decreto_Ejecutivo_No._330_20260217165315.pdf
+Descargando PDF del decreto 329...
+[WARN] Timeout esperando PDF para decreto 329
+Descargando PDF del decreto 328...
+Descarga completada para 328: D:\minka\DescargaPDF\Decreto_Ejecutivo_No._328_20260213090635.pdf
+Descargando PDF del decreto 327...
+Descarga completada para 327: D:\minka\DescargaPDF\Decreto_Ejecutivo_No._327_20260213090437.pdf
+Descargando PDF del decreto 326...
+Descarga completada para 326: D:\minka\DescargaPDF\Decreto_Ejecutivo_No._326_20260213090324.pdf
+Descargando PDF del decreto 325...
+Descarga completada para 325: D:\minka\DescargaPDF\Decreto_Ejecutivo_No._325_20260212221140_20260212221211.pdf
+Descargando PDF del decreto 324...
+Descarga completada para 324: D:\minka\DescargaPDF\Decreto_Ejecutivo_No._324_20260209141414_20260209141448.pdf
+Descargando PDF del decreto 323...
+Descarga completada para 323: D:\minka\DescargaPDF\DE_323_20260206080720.pdf
+Mapeo descargas: {'331': 'D:\\minka\\DescargaPDF\\Decreto_Ejecutivo_No._331_20260217165422.pdf', '330': 'D:\\minka\\DescargaPDF\\Decreto_Ejecutivo_No._330_20260217165315.pdf', '328': 'D:\\minka\\DescargaPDF\\Decreto_Ejecutivo_No._328_20260213090635.pdf', '327': 'D:\\minka\\DescargaPDF\\Decreto_Ejecutivo_No._327_20260213090437.pdf', '326': 'D:\\minka\\DescargaPDF\\Decreto_Ejecutivo_No._326_20260213090324.pdf', '325': 'D:\\minka\\DescargaPDF\\Decreto_Ejecutivo_No._325_20260212221140_20260212221211.pdf', '324': 'D:\\minka\\DescargaPDF\\Decreto_Ejecutivo_No._324_20260209141414_20260209141448.pdf', '323': 'D:\\minka\\DescargaPDF\\DE_323_20260206080720.pdf'}
+[DEBUG] Subiendo D:\minka\DescargaPDF\Decreto_Ejecutivo_No._331_20260217165422.pdf con datos: {'FolderPath': '1. Marco Normativo Externo/1.5. Presidencia de la República', 'TipoDocumento': 'Decreto', 'Emite': 'Presidencia', 'FechaEmision': '2026/03/17', 'Descripcion': 'Denunciar en todo su contenido el “Acuerdo Constitutivo del Centro del Sur”.', 'Decreto': '331', 'codSucursal': '1', 'codOficina': '1', 'codUsuario': 'BDRODRIG', 'codMaquina': 'GYE007', 'Ip': '10.1.128.12'}
+[DEBUG] Status: 200
+[DEBUG] Response body: {"itemId":"01M4MO7UWX25OC7WAWMNCL42TKOBRFXOIP","message":"Cargado correctamente"}
+[DEBUG] Subiendo D:\minka\DescargaPDF\Decreto_Ejecutivo_No._330_20260217165315.pdf con datos: {'FolderPath': '1. Marco Normativo Externo/1.5. Presidencia de la República', 'TipoDocumento': 'Decreto', 'Emite': 'Presidencia', 'FechaEmision': '2026/03/17', 'Descripcion': 'Denunciar la Convención Internacional para la Unificación de Ciertas Reglas en Materia de Conocimientos y el Protocolo para la Modificación de la Convención Internacional para la Unificación de Ciertas Reglas en Materia de Conocimiento.', 'Decreto': '330', 'codSucursal': '1', 'codOficina': '1', 'codUsuario': 'BDRODRIG', 'codMaquina': 'GYE007', 'Ip': '10.1.128.12'}
+[DEBUG] Status: 200
+[DEBUG] Response body: {"itemId":"01M4MO7UTO7KF54ONDQFBJF5XJ7V74RDYZ","message":"Cargado correctamente"}
+[DEBUG] Subiendo D:\minka\DescargaPDF\Decreto_Ejecutivo_No._328_20260213090635.pdf con datos: {'FolderPath': '1. Marco Normativo Externo/1.5. Presidencia de la República', 'TipoDocumento': 'Decreto', 'Emite': 'Presidencia', 'FechaEmision': '2026/03/12', 'Descripcion': 'Disponer al Centro Nacional de Inteligencia la emisión de alertas y reportes en procesos de contratación pública bajo régimen especial', 'Decreto': '328', 'codSucursal': '1', 'codOficina': '1', 'codUsuario': 'BDRODRIG', 'codMaquina': 'GYE007', 'Ip': '10.1.128.12'}
+[DEBUG] Status: 200
+[DEBUG] Response body: {"itemId":"01M4MO7URV264BSNGBKZCLX2GWAZ23FIYG","message":"Cargado correctamente"}
+[DEBUG] Subiendo D:\minka\DescargaPDF\Decreto_Ejecutivo_No._327_20260213090437.pdf con datos: {'FolderPath': '1. Marco Normativo Externo/1.5. Presidencia de la República', 'TipoDocumento': 'Decreto', 'Emite': 'Presidencia', 'FechaEmision': '2026/03/12', 'Descripcion': 'Ratificar en todo su contenido el Acuerdo de Servicios Aéreos entre el Gobierno de la República del Ecuador y el Gobierno del Reino de Arabia Saudí.', 'Decreto': '327', 'codSucursal': '1', 'codOficina': '1', 'codUsuario': 'BDRODRIG', 'codMaquina': 'GYE007', 'Ip': '10.1.128.12'}
+[DEBUG] Status: 200
+[DEBUG] Response body: {"itemId":"01M4MO7URDMN6JSN7AHJFJKNPDLDNICLB5","message":"Cargado correctamente"}
+[DEBUG] Subiendo D:\minka\DescargaPDF\Decreto_Ejecutivo_No._326_20260213090324.pdf con datos: {'FolderPath': '1. Marco Normativo Externo/1.5. Presidencia de la República', 'TipoDocumento': 'Decreto', 'Emite': 'Presidencia', 'FechaEmision': '2026/03/12', 'Descripcion': 'Designar al señor Carlos Alberto Flores Parra como Gerente de la Autoridad Portuaria de Esmeraldas.', 'Decreto': '326', 'codSucursal': '1', 'codOficina': '1', 'codUsuario': 'BDRODRIG', 'codMaquina': 'GYE007', 'Ip': '10.1.128.12'}
+[DEBUG] Status: 200
+[DEBUG] Response body: {"itemId":"01M4MO7UUIAOGIJCA5YZAY7BACFE77PFHL","message":"Cargado correctamente"}
+[DEBUG] Subiendo D:\minka\DescargaPDF\Decreto_Ejecutivo_No._325_20260212221140_20260212221211.pdf con datos: {'FolderPath': '1. Marco Normativo Externo/1.5. Presidencia de la República', 'TipoDocumento': 'Decreto', 'Emite': 'Presidencia', 'FechaEmision': '2026/03/12', 'Descripcion': 'Declarar como prioridad nacional la ejecución articulada e inmediata de acciones de preparación, respuesta y recuperación frente al impacto causado por la época lluviosa en todo el territorio nacional conforme la declaratoria de emergencia nacional contenida en la Resolución No. SNGR-48-2026 de 12 de marzo de 2026.', 'Decreto': '325', 'codSucursal': '1', 'codOficina': '1', 'codUsuario': 'BDRODRIG', 'codMaquina': 'GYE007', 'Ip': '10.1.128.12'}
+[DEBUG] Status: 200
+[DEBUG] Response body: {"itemId":"01M4MO7USBMETWL633K5F2JNS5FAZHLQB2","message":"Cargado correctamente"}
+[DEBUG] Subiendo D:\minka\DescargaPDF\Decreto_Ejecutivo_No._324_20260209141414_20260209141448.pdf con datos: {'FolderPath': '1. Marco Normativo Externo/1.5. Presidencia de la República', 'TipoDocumento': 'Decreto', 'Emite': 'Presidencia', 'FechaEmision': '2026/03/09', 'Descripcion': 'Declarar en comisión de servicios a la comitiva que acompañará al Presidente Constitucional de la República durante su viaje oficial internacional a realizarse del 10 al 11 de marzo de 2026, a la República de Chile.', 'Decreto': '324', 'codSucursal': '1', 'codOficina': '1', 'codUsuario': 'BDRODRIG', 'codMaquina': 'GYE007', 'Ip': '10.1.128.12'}
+[DEBUG] Status: 200
+[DEBUG] Response body: {"itemId":"01M4MO7URHDZDSLQQKT5CJZBZHZLDFJ7O4","message":"Cargado correctamente"}
+[DEBUG] Subiendo D:\minka\DescargaPDF\DE_323_20260206080720.pdf con datos: {'FolderPath': '1. Marco Normativo Externo/1.5. Presidencia de la República', 'TipoDocumento': 'Decreto', 'Emite': 'Presidencia', 'FechaEmision': '2026/03/05', 'Descripcion': 'Dar por terminadas las funciones del señor Jaime Armando Serpa García como Gobernador de la provincia de El Oro. Designar al señor Francisco Xavier Minuche Verdaguer como Gobernador de la provincia de El Oro.', 'Decreto': '323', 'codSucursal': '1', 'codOficina': '1', 'codUsuario': 'BDRODRIG', 'codMaquina': 'GYE007', 'Ip': '10.1.128.12'}
+[DEBUG] Status: 200
+[DEBUG] Response body: {"itemId":"01M4MO7UQCH47UJARVZVHIKXL7OFKJPKKT","message":"Cargado correctamente"}
+[INFO] Archivo 'D:\minka\decretos_guardados.txt' creado correctamente.
+[INFO] Se guardaron 10 decretos en 'D:\minka\decretos_guardados.txt'.

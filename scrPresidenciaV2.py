@@ -395,31 +395,60 @@ def descargar_pdfs_nuevos(driver, registros_nuevos, carpeta_descargas=CARPETA_DE
 
 # ─── SUBIDA A SHAREPOINT ─────────────────────────────────────────────────────────
 
+def normalizar_fecha(fecha_str: str) -> str:
+    """
+    Convierte la fecha del portal (puede venir como 'yyyy/MM/dd', 'dd/MM/yyyy', etc.)
+    al formato 'yyyy-MM-dd' que ASP.NET parsea sin ambigüedad como DateTime.
+    """
+    if not fecha_str:
+        return ""
+    # Intentar varios formatos comunes del portal
+    from datetime import datetime as dt
+    for fmt in ("%Y/%m/%d", "%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y"):
+        try:
+            parsed = dt.strptime(fecha_str.strip(), fmt)
+            return parsed.strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    log.warning(f"No se pudo parsear la fecha '{fecha_str}', enviando tal cual.")
+    return fecha_str
+
+
 def subir_pdf_con_datos(ruta_pdf: str, datos: dict) -> dict | None:
     """
     Sube un PDF a SharePoint vía la API.
     Devuelve el JSON de respuesta (contiene itemId) o None si falla.
+
+    NOTAS sobre el modelo UploadPdfRequest de la API (.NET):
+      - File        : IFormFile  [Required]
+      - FolderPath  : string
+      - TipoDocumento: string   [Required]
+      - Emite       : string    [Required]
+      - FechaEmision: DateTime  [Required] → formato yyyy-MM-dd
+      - Descripcion : string
+      - Decreto     : string
+    No enviar campos que no existen en el modelo (codSucursal, codOficina, etc.)
+    ya que en ciertas configs de ASP.NET pueden causar 400.
     """
+    # FIX: Convertir fecha al formato ISO que ASP.NET parsea correctamente
+    fecha_normalizada = normalizar_fecha(datos.get("FechaEmision", ""))
+
     with open(ruta_pdf, "rb") as f:
+        # FIX: Usar "File" (mayúscula) para coincidir con el nombre de la propiedad del modelo
         files = {
-            "file": (os.path.basename(ruta_pdf), f, "application/pdf"),
+            "File": (os.path.basename(ruta_pdf), f, "application/pdf"),
         }
+        # FIX: Solo enviar los campos que existen en UploadPdfRequest
         data = {
             "FolderPath": "1. Marco Normativo Externo/1.5. Presidencia de la República",
             "TipoDocumento": "Decreto",
             "Emite": "Presidencia",
-            "FechaEmision": datos.get("FechaEmision", ""),
+            "FechaEmision": fecha_normalizada,
             "Descripcion": datos.get("Descripcion", ""),
             "Decreto": datos.get("Decreto", ""),
-            # DATOS QUEMADOS — cambiar según ambiente
-            "codSucursal": "1",
-            "codOficina": "1",
-            "codUsuario": "BDRODRIG",
-            "codMaquina": "GYE007",
-            "Ip": "10.1.128.12",
         }
         try:
-            log.info(f"Subiendo {os.path.basename(ruta_pdf)} | Decreto: {datos.get('Decreto')}")
+            log.info(f"Subiendo {os.path.basename(ruta_pdf)} | Decreto: {datos.get('Decreto')} | Fecha: {fecha_normalizada}")
             log.debug(f"Datos: {data}")
             response = requests.post(API_UPLOAD, files=files, data=data, timeout=60)
             log.info(f"Status: {response.status_code} | Body: {response.text}")

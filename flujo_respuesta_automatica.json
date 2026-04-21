@@ -1,0 +1,154 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Obtener_correo_recibido": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['office365']['connectionId']"
+            }
+          },
+          "method": "get",
+          "path": "/v2/Mail/@{encodeURIComponent(triggerOutputs()?['body/Id'])}",
+          "queries": {
+            "mailboxAddress": "buzon_compartido@tuempresa.com"
+          }
+        },
+        "runAfter": {}
+      },
+      "Extraer_datos_CC": {
+        "type": "Compose",
+        "inputs": {
+          "ccList": "@triggerOutputs()?['body/CcRecipients']",
+          "asesorEmail": "@first(triggerOutputs()?['body/CcRecipients'])?['emailAddress/address']",
+          "asesorNombreCompleto": "@first(triggerOutputs()?['body/CcRecipients'])?['emailAddress/name']"
+        },
+        "runAfter": {
+          "Obtener_correo_recibido": ["Succeeded"]
+        }
+      },
+      "Separar_nombre_y_apellido": {
+        "type": "Compose",
+        "inputs": {
+          "nombreCompleto": "@outputs('Extraer_datos_CC')?['asesorNombreCompleto']",
+          "primerNombre": "@split(outputs('Extraer_datos_CC')?['asesorNombreCompleto'], ' ')[0]",
+          "primerApellido": "@if(greater(length(split(outputs('Extraer_datos_CC')?['asesorNombreCompleto'], ' ')), 1), split(outputs('Extraer_datos_CC')?['asesorNombreCompleto'], ' ')[1], '')"
+        },
+        "runAfter": {
+          "Extraer_datos_CC": ["Succeeded"]
+        }
+      },
+      "Condicion_CC_existe": {
+        "type": "If",
+        "expression": {
+          "and": [
+            {
+              "not": {
+                "equals": [
+                  "@outputs('Extraer_datos_CC')?['asesorEmail']",
+                  null
+                ]
+              }
+            }
+          ]
+        },
+        "actions": {
+          "Construir_mensaje_respuesta": {
+            "type": "Compose",
+            "inputs": "@concat(\n'Hola, ', outputs('Separar_nombre_y_apellido')?['primerNombre'], ' ', outputs('Separar_nombre_y_apellido')?['primerApellido'], ',\n\nTe saluda Héctor Villa.\n\nGracias por contactarnos. Hemos recibido tu mensaje y nos pondremos en contacto contigo a la brevedad posible.\n\nQuedamos a tus órdenes para cualquier duda o comentario.\n\nAtentamente,\nHéctor Villa\nAsesor de Servicio al Cliente')"
+          },
+          "Enviar_respuesta_al_cliente": {
+            "type": "ApiConnection",
+            "inputs": {
+              "host": {
+                "connection": {
+                  "name": "@parameters('$connections')['office365']['connectionId']"
+                }
+              },
+              "method": "post",
+              "path": "/v2/Mail",
+              "body": {
+                "To": "@triggerOutputs()?['body/From']",
+                "Subject": "@concat('RE: ', triggerOutputs()?['body/Subject'])",
+                "Body": "@outputs('Construir_mensaje_respuesta')",
+                "From": "buzon_compartido@tuempresa.com",
+                "Importance": "Normal",
+                "IsHtml": false
+              }
+            },
+            "runAfter": {
+              "Construir_mensaje_respuesta": ["Succeeded"]
+            }
+          }
+        },
+        "else": {
+          "actions": {
+            "Registrar_error_sin_CC": {
+              "type": "Compose",
+              "inputs": "No se encontró asesor en CC. El correo no tiene copia a ningún asesor.",
+              "runAfter": {}
+            }
+          }
+        },
+        "runAfter": {
+          "Separar_nombre_y_apellido": ["Succeeded"]
+        }
+      }
+    },
+    "triggers": {
+      "Al_recibir_correo_en_buzon_compartido": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['office365']['connectionId']"
+            }
+          },
+          "method": "get",
+          "path": "/v2/Mail/OnNewEmail",
+          "queries": {
+            "mailboxAddress": "buzon_compartido@tuempresa.com",
+            "folderPath": "Inbox",
+            "importance": "Any",
+            "fetchOnlyWithAttachment": false,
+            "includeAttachments": false
+          }
+        },
+        "recurrence": {
+          "frequency": "Minute",
+          "interval": 1
+        },
+        "splitOn": "@triggerBody()?['value']"
+      }
+    },
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      }
+    }
+  },
+  "parameters": {
+    "$connections": {
+      "value": {
+        "office365": {
+          "connectionId": "/subscriptions/{SUBSCRIPTION_ID}/resourceGroups/{RESOURCE_GROUP}/providers/Microsoft.Web/connections/office365",
+          "connectionName": "office365",
+          "id": "/subscriptions/{SUBSCRIPTION_ID}/providers/Microsoft.Web/locations/{REGION}/managedApis/office365"
+        }
+      }
+    }
+  },
+  "_INSTRUCCIONES_IMPORTACION": {
+    "paso1": "Ve a Power Automate: https://make.powerautomate.com",
+    "paso2": "En el menú izquierdo, selecciona 'Mis flujos'",
+    "paso3": "Haz clic en 'Importar' > 'Importar paquete (heredado)' O usa 'Crear desde cero' y pega el JSON",
+    "paso4": "Reemplaza 'buzon_compartido@tuempresa.com' con el correo real del buzón compartido",
+    "paso5": "Configura la conexión de Office 365 con las credenciales del buzón compartido",
+    "paso6": "Ajusta la plantilla del mensaje en la acción 'Construir_mensaje_respuesta' según necesites",
+    "nota_importante": "El flujo extrae el nombre del asesor del campo CC del correo recibido. El asesor debe estar en CC del correo que envía el cliente."
+  }
+}
